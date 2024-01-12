@@ -118,7 +118,11 @@ class _MyHomePageState extends State<MyHomePage> {
     prefs.setStringList('cities', cities);
     setState(() {});
     setState(() {
-      appBarTitle = cities.isNotEmpty ? cities[pageController.page?.round() ?? 0] : '';
+      if (cities.isEmpty) {
+        appBarTitle = 'Dodaj miasto';
+      } else {
+        appBarTitle = cities[pageController.page?.round() ?? 0];
+      }
     });
   }
 
@@ -174,9 +178,15 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Theme.of(context).brightness == Brightness.dark ? null : Colors.white,
       appBar: AppBar(
         backgroundColor: Theme.of(context).brightness == Brightness.dark ? null : Colors.white,
-        title: Text(
-          appBarTitle,
-          style: TextStyle(fontSize: 36),
+        title: Row(
+          children: <Widget>[
+            Text(
+              appBarTitle,
+              style: TextStyle(fontSize: 36),
+            ),
+            if (pageController.hasClients && pageController.page!.round() == 0)
+              Icon(Icons.location_on),
+          ],
         ),
         actions: <Widget>[
           IconButton(
