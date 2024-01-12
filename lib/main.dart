@@ -87,6 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
       prefs.setStringList('cities', cities);
       futureWeathers.add(Future.value(weather));
       setState(() {});
+      setState(() {
+        appBarTitle = city;
+      });
     } catch (e) {
       showDialog(
         context: context,
@@ -114,6 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
     futureWeathers.removeAt(index);
     prefs.setStringList('cities', cities);
     setState(() {});
+    setState(() {
+      appBarTitle = cities.isNotEmpty ? cities[pageController.page?.round() ?? 0] : '';
+    });
   }
 
   Future<Weather> fetchWeather(String city) async {
